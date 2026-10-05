@@ -1,0 +1,435 @@
+/* ============================================
+   Tokens
+   ============================================ */
+:root {
+  --maroon-deep:  #33091a;
+  --maroon:       #470f22;
+  --maroon-soft:  #591430;
+  --gold:         #c9a24d;
+  --gold-light:   #e3c583;
+  --parchment:    #cba872;
+  --parchment-dk: #b7935f;
+  --cream:        #f7f0e2;
+  --ink:          #2a0c16;
+
+  --font-display: 'Cinzel', serif;
+  --font-body: 'EB Garamond', serif;
+
+  --max-w: 620px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--maroon);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 19px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  margin: 0;
+}
+
+p { margin: 0 0 1em; }
+
+.section {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 5.5rem 1.75rem;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.section-title {
+  font-size: 1.9rem;
+  letter-spacing: 0.04em;
+  color: var(--gold-light);
+  margin-bottom: 2.5rem;
+}
+.section-title.light { color: var(--gold-light); }
+
+/* ============================================
+   Reveal-on-scroll (one deliberate mechanic,
+   used consistently rather than per-element flourishes)
+   ============================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { transition: none; opacity: 1; transform: none; }
+}
+
+/* ============================================
+   Hero: gopuram doors
+   ============================================ */
+.hero {
+  height: 100vh;
+  height: 100svh;
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, var(--maroon-soft) 0%, var(--maroon-deep) 75%);
+  overflow: hidden;
+}
+
+.gopuram-wrap {
+  position: relative;
+  width: min(90vw, 420px);
+  aspect-ratio: 400 / 460;
+  perspective: 1200px;
+}
+
+.gopuram-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  color: var(--gold);
+}
+.gopuram-svg path,
+.gopuram-svg polygon,
+.gopuram-svg circle,
+.gopuram-svg line {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.4;
+}
+.gopuram-svg .filled { fill: var(--gold); stroke: none; }
+.gopuram-svg rect { fill: var(--gold); stroke: none; opacity: 0.9; }
+
+.door-panel {
+  position: absolute;
+  bottom: 28.5%;
+  width: 13%;
+  height: 17.5%;
+  background: linear-gradient(180deg, var(--maroon-soft), var(--maroon-deep));
+  border: 1.5px solid var(--gold);
+  transition: transform 1.1s cubic-bezier(.6,0,.3,1);
+  transform-style: preserve-3d;
+}
+.door-left  { left: 37%; transform-origin: left center; }
+.door-right { right: 37%; transform-origin: right center; }
+
+.gopuram-wrap.is-open .door-left  { transform: rotateY(-108deg); }
+.gopuram-wrap.is-open .door-right { transform: rotateY(108deg); }
+
+.scroll-cue {
+  position: absolute;
+  bottom: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  color: var(--gold-light);
+  opacity: 0.85;
+  animation: bob 2.4s ease-in-out infinite;
+  transition: opacity 0.5s ease;
+}
+.scroll-cue.hide { opacity: 0; }
+@keyframes bob {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, 8px); }
+}
+
+/* ============================================
+   Welcome / names
+   ============================================ */
+.welcome-section {
+  background: var(--parchment);
+  color: var(--ink);
+  border-radius: 28px 28px 0 0;
+  padding-top: 4.5rem;
+}
+
+.leaf {
+  position: absolute;
+  font-size: 2.6rem;
+  opacity: 0.55;
+  top: 1.2rem;
+}
+.leaf-left { left: 0.5rem; }
+.leaf-right { right: 0.5rem; transform: scaleX(-1); }
+
+.emblem { color: var(--maroon); margin-bottom: 1.2rem; }
+
+.with-blessings {
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  color: var(--maroon);
+  opacity: 0.85;
+  margin-bottom: 1.6rem;
+}
+
+.couple-names {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+  color: var(--maroon-deep);
+  margin-bottom: 1.4rem;
+}
+.bride-name, .groom-name { font-size: 2.6rem; line-height: 1.15; }
+.weds {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--maroon);
+  opacity: 0.8;
+}
+
+.headline-date {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  color: var(--maroon-deep);
+}
+.headline-venue {
+  font-size: 0.95rem;
+  color: var(--maroon);
+  opacity: 0.85;
+  max-width: 320px;
+  margin: 0 auto 2rem;
+}
+
+.welcome-message {
+  font-style: italic;
+  max-width: 420px;
+  margin: 0 auto;
+  color: var(--maroon-deep);
+}
+
+/* ============================================
+   Festivities
+   ============================================ */
+.festivities-section { background: var(--maroon); }
+
+.event-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.event-card {
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  padding: 2.2rem 1.5rem 1.8rem;
+  background: linear-gradient(180deg, rgba(201,162,77,0.06), transparent);
+}
+
+.event-motif {
+  width: 44px;
+  height: 44px;
+  color: var(--gold);
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 2;
+  margin-bottom: 0.8rem;
+}
+
+.event-body h3 {
+  font-size: 1.4rem;
+  color: var(--gold-light);
+  margin-bottom: 0.5rem;
+}
+.event-when { font-size: 0.95rem; color: var(--cream); opacity: 0.9; }
+.event-where { font-size: 0.9rem; color: var(--cream); opacity: 0.75; }
+
+/* ============================================
+   Story + timeline
+   ============================================ */
+.story-section { background: var(--maroon-deep); }
+
+.ornament {
+  color: var(--gold);
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.story-text p {
+  text-align: left;
+  color: var(--cream);
+  opacity: 0.92;
+}
+
+.timeline {
+  margin-top: 3rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+}
+
+.timeline-item {
+  border-left: 2px solid var(--gold);
+  padding-left: 1.2rem;
+}
+.timeline-date {
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  color: var(--gold-light);
+  margin-bottom: 0.25rem;
+}
+.timeline-item h4 {
+  font-size: 1.1rem;
+  color: var(--cream);
+  margin-bottom: 0.35rem;
+}
+.timeline-item p { color: var(--cream); opacity: 0.85; margin-bottom: 0; }
+
+/* ============================================
+   RSVP
+   ============================================ */
+.rsvp-section { background: var(--maroon); }
+
+.rsvp-intro { color: var(--cream); opacity: 0.9; margin-bottom: 2.5rem; }
+
+.rsvp-form {
+  background: var(--cream);
+  color: var(--ink);
+  border-radius: 18px;
+  padding: 2rem 1.5rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+
+.rsvp-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--maroon-deep);
+}
+
+.rsvp-form input[type="text"],
+.rsvp-form input[type="email"],
+.rsvp-form input[type="tel"],
+.rsvp-form textarea {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--parchment-dk);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--ink);
+}
+.rsvp-form input:focus,
+.rsvp-form textarea:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+}
+
+.event-checks {
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.event-checks legend {
+  font-size: 0.9rem;
+  color: var(--maroon-deep);
+  padding: 0;
+  margin-bottom: 0.3rem;
+}
+.check-row {
+  flex-direction: row !important;
+  align-items: flex-start;
+  gap: 0.7rem !important;
+  border: 1px solid var(--parchment-dk);
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+}
+.check-row input { margin-top: 0.25rem; }
+.check-row span { font-size: 0.88rem; color: var(--ink); }
+
+.submit-btn {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  background: var(--parchment-dk);
+  color: var(--ink);
+  border: none;
+  border-radius: 8px;
+  padding: 0.9rem;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+.submit-btn:hover { background: var(--gold); }
+.submit-btn:focus-visible { outline: 2px solid var(--maroon-deep); outline-offset: 2px; }
+
+.rsvp-status { font-size: 0.9rem; text-align: center; margin: 0; min-height: 1.2em; }
+
+/* ============================================
+   Location
+   ============================================ */
+.location-section { background: var(--parchment); color: var(--ink); }
+.location-section .section-title { color: var(--maroon-deep); }
+
+.venue-block { margin-bottom: 3rem; }
+.venue-block:last-child { margin-bottom: 0; }
+.venue-block h3 { color: var(--maroon-deep); font-size: 1.2rem; margin-bottom: 0.4rem; }
+.venue-block p { color: var(--maroon); opacity: 0.9; }
+
+.map-frame {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--parchment-dk);
+  margin: 1rem 0;
+}
+.map-frame iframe { width: 100%; height: 100%; border: 0; }
+
+.directions-btn {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: var(--cream);
+  background: var(--maroon-deep);
+  padding: 0.7rem 1.4rem;
+  border-radius: 6px;
+  text-decoration: none;
+}
+.directions-btn:hover { background: var(--maroon); }
+
+/* ============================================
+   Footer
+   ============================================ */
+.site-footer {
+  background: var(--maroon-deep);
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+  color: var(--gold-light);
+  opacity: 0.85;
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (min-width: 720px) {
+  body { font-size: 20px; }
+  .bride-name, .groom-name { font-size: 3.2rem; }
+  .event-cards { flex-direction: row; }
+  .event-card { flex: 1; }
+}
